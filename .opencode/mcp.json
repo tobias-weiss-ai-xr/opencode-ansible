@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "infra-shell": {
+      "description": "Execute infrastructure commands (SSH, docker, systemctl) on managed hosts",
+      "transport": "stdio",
+      "command": "ssh",
+      "args": ["{{target_host}}", "bash"]
+    },
+    "infra-validate": {
+      "description": "Validate Ansible playbook syntax and best practices",
+      "transport": "stdio",
+      "command": "ansible-lint",
+      "args": ["--format", "json"]
+    }
+  }
+}

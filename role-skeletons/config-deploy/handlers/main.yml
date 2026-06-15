@@ -1,0 +1,5 @@
+# Config deploy skeleton — handlers
+---
+- name: reload config
+  ansible.builtin.debug:
+    msg: "REPLACE ME: add service reload handler here"

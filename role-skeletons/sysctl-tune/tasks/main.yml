@@ -1,0 +1,9 @@
+# Sysctl tune skeleton — tasks
+---
+- name: Apply kernel parameters
+  ansible.builtin.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop: "{{ sysctl_tune_params | dict2items }}"

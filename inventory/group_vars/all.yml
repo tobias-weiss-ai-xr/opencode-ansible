@@ -1,0 +1,16 @@
+---
+# Global variables — apply to every host
+# Override in group_vars/<group>.yml or host_vars/<host>.yml
+
+# Timezone
+timezone: UTC
+
+# Package management
+package_cache_valid_hours: 360
+
+# Monitoring (default: off — enable per group)
+monitoring_enabled: false
+
+# Security
+ssh_harden: true
+firewall_enabled: false

@@ -1,0 +1,27 @@
+---
+# Master playbook — orchestrate all infrastructure
+# Usage:
+#   ansible-playbook playbooks/site.yml                    # Run everything
+#   ansible-playbook playbooks/site.yml --tags sysctl      # Kernel tuning only
+#   ansible-playbook playbooks/site.yml --list-tags        # Show all available tags
+#   ansible-playbook playbooks/site.yml --check --diff     # Dry-run
+
+# === System ===
+- import_playbook: bootstrap.yml
+  tags: [bootstrap]
+
+# === Kernel tuning ===
+- import_playbook: sysctl.yml
+  tags: [sysctl, system]
+
+# === Security ===
+- import_playbook: security.yml
+  tags: [security, ssh, firewall]
+
+# === Docker ===
+- import_playbook: docker.yml
+  tags: [docker, containers]
+
+# === Monitoring ===
+- import_playbook: monitoring.yml
+  tags: [monitoring, observability]

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Scaffold a new Ansible role from the nearest matching skeleton.
+# Usage: ./scripts/new-role <role-name> [skeleton-name]
+# If skeleton-name is omitted, an empty role is created.
+
+set -euo pipefail
+
+ROLE_NAME="${1:?Usage: new-role <role-name> [skeleton]}"
+SKELETON_NAME="${2:-empty}"
+ROLE_DIR="roles/${ROLE_NAME}"
+SKELETON_DIR="role-skeletons/${SKELETON_NAME}"
+
+if [ -d "$ROLE_DIR" ]; then
+  echo "ERROR: Role already exists at ${ROLE_DIR}"
+  exit 1
+fi
+
+if [ -d "$SKELETON_DIR" ]; then
+  echo "Scaffolding from skeleton: ${SKELETON_NAME}"
+  mkdir -p "$ROLE_DIR"
+  cp -r "${SKELETON_DIR}/"* "$ROLE_DIR/"
+else
+  echo "Scaffolding empty role (no skeleton '${SKELETON_NAME}' found)"
+  mkdir -p "${ROLE_DIR}"/{defaults,tasks,handlers,templates,files,vars}
+fi
+
+# Rename skeleton role references if applicable
+if [ -f "${ROLE_DIR}/defaults/main.yml" ]; then
+  if [[ "$(uname)" == "Darwin" ]]; then
+    sed -i '' "s/role_name/${ROLE_NAME}/g" "${ROLE_DIR}"/defaults/main.yml 2>/dev/null || true
+  else
+    sed -i "s/role_name/${ROLE_NAME}/g" "${ROLE_DIR}"/defaults/main.yml 2>/dev/null || true
+  fi
+fi
+
+echo "✅ Created role at ${ROLE_DIR}"
+ls -la "${ROLE_DIR}/"

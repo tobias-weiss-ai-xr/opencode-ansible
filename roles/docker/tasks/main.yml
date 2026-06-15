@@ -1,0 +1,28 @@
+---
+- name: Install Docker (Ubuntu/Debian) — via official convenience script
+  ansible.builtin.include_tasks: install-debian.yml
+  when: ansible_os_family in ["Debian", "Ubuntu"]
+
+- name: Install Docker (Archlinux)
+  ansible.builtin.include_tasks: install-arch.yml
+  when: ansible_os_family == "Archlinux"
+
+- name: Ensure docker daemon config is present
+  ansible.builtin.copy:
+    dest: /etc/docker/daemon.json
+    content: "{{ docker_daemon_config | to_nice_json }}\n"
+    mode: "0644"
+  notify: restart docker
+
+- name: Ensure users are in docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  loop: "{{ docker_users }}"
+
+- name: Ensure Docker is enabled and running
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started

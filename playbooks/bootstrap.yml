@@ -1,0 +1,38 @@
+---
+# Bootstrap a new host — initial setup
+# Run this ONCE when provisioning a new machine.
+#
+# Usage:
+#   ansible-playbook playbooks/bootstrap.yml -i inventory/hosts.yml -l newhost
+
+- name: Bootstrap new host
+  hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Set hostname to inventory name
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Install essential packages
+      ansible.builtin.package:
+        name:
+          - curl
+          - wget
+          - htop
+          - jq
+          - netcat-openbsd
+          - rsync
+          - tmux
+          - vim
+        state: present
+        update_cache: yes
+
+    - name: Set timezone
+      ansible.builtin.timezone:
+        name: "{{ timezone }}"
+
+    - name: Enable automatic security updates (Debian/Ubuntu)
+      ansible.builtin.include_role:
+        name: unattended_upgrades
+      when: ansible_os_family in ["Debian", "Ubuntu"]

@@ -1,0 +1,9 @@
+---
+# Linux-specific variables
+ansible_os_family: "{{ ansible_facts.os_family }}"
+
+# Kernel tuning (overridden per group where needed)
+sysctl_settings:
+  vm.swappiness: 60
+  vm.vfs_cache_pressure: 100
+  net.core.somaxconn: 128

@@ -1,0 +1,4 @@
+# Config deploy skeleton — defaults
+config_dest: "/etc/{{ role_name }}"
+config_src: "{{ role_path }}/files/"
+config_mode: "0644"

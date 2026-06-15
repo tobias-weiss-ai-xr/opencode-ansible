@@ -1,0 +1,11 @@
+---
+# Docker role defaults
+docker_install: true
+docker_compose_install: true
+docker_users:
+  - "{{ ansible_user }}"
+docker_daemon_config:
+  log-driver: json-file
+  log-opts:
+    max-size: 10m
+    max-file: "3"

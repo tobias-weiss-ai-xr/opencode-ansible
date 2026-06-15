@@ -1,0 +1,11 @@
+---
+# Apply kernel sysctl parameters from sysctl_settings variable.
+# Override sysctl_settings in group_vars to tune per host group.
+
+- name: Apply sysctl parameters — kernel memory and network tuning
+  ansible.builtin.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: "{{ sysctl_reload }}"
+  loop: "{{ sysctl_settings | dict2items }}"

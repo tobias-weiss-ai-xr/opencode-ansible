@@ -1,0 +1,27 @@
+# Docker Compose service skeleton — tasks
+---
+- name: Ensure compose directory exists
+  ansible.builtin.file:
+    path: "{{ compose_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Deploy docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ compose_dir }}/docker-compose.yml"
+    mode: "0644"
+
+- name: Deploy environment file (if any)
+  ansible.builtin.template:
+    src: "{{ compose_env_file }}"
+    dest: "{{ compose_dir }}/.env"
+    mode: "0600"
+  when: compose_env_file | length > 0
+
+- name: Start Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ compose_dir }}"
+    project_name: "{{ compose_project_name }}"
+    state: present
+    restart: yes

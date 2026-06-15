@@ -1,0 +1,15 @@
+# Config deploy skeleton — tasks
+---
+- name: Ensure destination directory exists
+  ansible.builtin.file:
+    path: "{{ config_dest }}"
+    state: directory
+    mode: "0755"
+
+- name: Deploy configuration files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ config_dest }}/{{ item | basename }}"
+    mode: "{{ config_mode }}"
+  loop: "{{ lookup('fileglob', config_src ~ '*', wantlist=True) }}"
+  notify: reload config

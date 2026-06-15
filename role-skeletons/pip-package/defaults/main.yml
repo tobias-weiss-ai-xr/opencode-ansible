@@ -1,0 +1,4 @@
+# Pip package skeleton — defaults
+pip_packages: []
+pip_executable: pip3
+pip_requirements_file: ""

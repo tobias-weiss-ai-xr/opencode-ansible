@@ -1,0 +1,5 @@
+# Systemd wrapper skeleton — defaults
+service_name: "{{ role_name }}"
+service_user: "{{ ansible_user }}"
+service_working_dir: "/opt/{{ role_name }}"
+service_restart_sec: "5"

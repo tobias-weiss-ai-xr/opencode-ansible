@@ -1,0 +1,5 @@
+# Docker Compose service skeleton — defaults
+compose_dir: "/opt/{{ role_name }}"
+compose_project_name: "{{ role_name }}"
+compose_restart_policy: unless-stopped
+compose_env_file: ""
