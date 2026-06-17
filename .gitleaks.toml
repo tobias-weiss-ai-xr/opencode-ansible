@@ -1,0 +1,27 @@
+[extend]
+useDefaultConfig = true
+
+[[rules]]
+id = "ansible-vault-password"
+description = "Ansible Vault password file"
+regex = '''(?i)vault_pass(?:word)?(?:_file)?\s*[:=]+\s*['"]?.+['"]?'''
+tags = ["ansible", "vault", "secret"]
+
+[[rules]]
+id = "docker-compose-database-url"
+description = "Database URL in docker-compose or config"
+regex = '''(?:postgres|mysql|redis|mongodb)://\S+:\S+@\S+'''
+tags = ["database", "credentials", "docker"]
+
+[[rules]]
+id = "generic-api-key-comment"
+description = "Generic key or token in comments"
+regex = '''(?i)(?:sk-|pk-|api[-_]?key|api[-_]?secret|access[-_]?token|secret[-_]?key)[\s"':=]+[A-Za-z0-9_\-]{16,}'''
+tags = ["key", "api", "secret"]
+
+[allowlist]
+paths = [
+    "(?i)\.git",
+    "(?i)node_modules",
+    "(?i)vendor",
+]
