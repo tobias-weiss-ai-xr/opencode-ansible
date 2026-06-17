@@ -3,7 +3,7 @@
 docker_install: true
 docker_compose_install: true
 docker_users:
-  - "{{ ansible_user }}"
+- "{{ ansible_user }}"
 docker_daemon_config:
   log-driver: json-file
   log-opts:
