@@ -1,14 +1,10 @@
----
-yaml-files:
-  - "*.yaml"
-  - "*.yml"
+title = "opencode-ansible gitleaks config"
 
-ignore: |
-  .git/
+[extend]
+useDefaultConfig = true
 
-rules:
-  line-length:
-    max: 120
-    level: warning
-  comments:
-    min-spaces-from-content: 1
+[allowlist]
+description = "global allowlist"
+paths = [
+    "(?i)\\.git",
+]
