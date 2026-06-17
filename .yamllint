@@ -1,5 +1,7 @@
 ---
-extends: default
+yaml-files:
+  - "*.yaml"
+  - "*.yml"
 
 ignore: |
   .git/
@@ -10,6 +12,3 @@ rules:
     level: warning
   comments:
     min-spaces-from-content: 1
-  document-start: disable
-  truthy:
-    check-keys: false
