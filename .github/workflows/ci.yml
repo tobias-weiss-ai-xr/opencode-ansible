@@ -22,12 +22,12 @@ jobs:
     name: Ansible Lint
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Run ansible-lint
-      run: |
-        pip install ansible ansible-lint
-        ansible-lint playbooks/ roles/
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run ansible-lint
+        run: |
+          pip install ansible-core ansible-lint
+          ansible-lint -c .ansible-lint playbooks/
 
   gitleaks:
     name: Gitleaks Secret Scan

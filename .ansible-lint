@@ -1,0 +1,7 @@
+# Ansible-lint configuration
+# See https://ansible-lint.readthedocs.io/en/latest/configuration/
+#
+# This is a skeleton repo with example playbooks/roles.
+# Be permissive for formatting rules that differ across projects.
+skip_list:
+  - role-skeletons/
